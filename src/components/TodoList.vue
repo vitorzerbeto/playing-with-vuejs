@@ -1,13 +1,13 @@
 <template>
   <div id="todo-list">
-    <div v-for="[key, value] of todos" :key="key">
-      <TodoListItem :title="value.title" :description="value.description" />
+    <div v-for="[key, { title, description }] of todos" :key="key">
+      <TodoListItem :id="key" :title="title" :description="description" :on-delete="onDelete" />
     </div>
   </div>
 </template>
 
 <script>
-import TodoListItem from './TodoListItem'
+import TodoListItem from './TodoListItem';
 
 export default {
   components: {
@@ -18,13 +18,12 @@ export default {
       type: Map,
       required: true,
     },
+    onDelete: {
+      type: Function,
+      required: true,
+    },
   },
-  created() {
-    this.todos.forEach((value, key) => {
-      console.log({ description: value.description, key })
-    })
-  },
-}
+};
 </script>
 
 <style>

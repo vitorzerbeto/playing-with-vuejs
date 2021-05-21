@@ -1,10 +1,5 @@
-
 module.exports = {
-  extends: [
-    'plugin:vue/recommended',
-    'plugin:prettier-vue/recommended',
-    'prettier',
-  ],
+  extends: ['plugin:vue/recommended', 'plugin:prettier-vue/recommended', 'prettier'],
 
   settings: {
     'prettier-vue': {
@@ -29,7 +24,6 @@ module.exports = {
          * @default true
          */
         script: true,
-
 
         // Settings for how to process custom blocks
         customBlocks: {
@@ -73,7 +67,6 @@ module.exports = {
         // @see https://prettier.io/docs/en/options.html
         printWidth: 100,
         singleQuote: true,
-        semi: false,
         trailingComma: 'es5',
       },
     ],

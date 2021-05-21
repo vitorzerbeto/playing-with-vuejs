@@ -2,13 +2,17 @@
   <div class="todo-item">
     <h3>{{ title }}</h3>
     <p>{{ description }}</p>
-    <button class="delete">Delete</button>
+    <button class="delete" @click="handleDelete">Delete</button>
   </div>
 </template>
 
 <script>
 export default {
   props: {
+    id: {
+      type: Number,
+      required: true,
+    },
     title: {
       type: String,
       required: true,
@@ -19,10 +23,15 @@ export default {
     },
     onDelete: {
       type: Function,
-      default: () => {},
+      required: true,
     },
   },
-}
+  methods: {
+    handleDelete() {
+      this.onDelete({ key: this.id });
+    },
+  },
+};
 </script>
 
 <style>

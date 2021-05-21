@@ -2,15 +2,15 @@
   <div id="app">
     <h1>TODO LIST</h1>
 
-    <TodoForm :onSave="saveTodo" />
+    <TodoForm :on-save="saveTodo" />
 
-    <TodoList :todos="todos" />
+    <TodoList :todos="todos" :on-delete="deleteTodo" />
   </div>
 </template>
 
 <script>
-import TodoList from './components/TodoList'
-import TodoForm from './components/TodoForm'
+import TodoList from './components/TodoList';
+import TodoForm from './components/TodoForm';
 
 export default {
   name: 'App',
@@ -24,14 +24,17 @@ export default {
         [1, { title: 'Todo', description: 'Finalizar app de todos' }],
         [2, { title: 'Todo 2', description: 'Finalizar tarfaz de casa' }],
       ]),
-    }
+    };
   },
   methods: {
-    saveTodo({ title, description }) {
-      this.todos.set(Date.now(), { title, description })
+    saveTodo({ title, description, key = Date.now() }) {
+      this.todos.set(key, { title, description });
+    },
+    deleteTodo({ key }) {
+      this.todos.delete(key);
     },
   },
-}
+};
 </script>
 
 <style>
