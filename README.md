@@ -15,6 +15,7 @@ Create and store your notes for later purpose!
 
 - [ ] User can create and edit a note in Markdown format. On save it will convert Markdown to HTML
 - [x] User can see the date when he created the note
+- [ ] User can filter by creation date, alphabetical order or last edited notes
 
 ## Useful links and resources
 
