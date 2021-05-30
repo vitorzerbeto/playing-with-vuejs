@@ -19,26 +19,53 @@ export default {
   },
   data() {
     return {
-      notes: new Map([
-        [1, { title: 'Note', description: 'Finalizar app de notes' }],
-        [2, { title: 'Note 2', description: 'Finalizar tarfaz de casa' }],
-      ]),
+      notes: new Map(),
       noteToEdit: undefined,
       isEditing: false,
     };
   },
+  mounted() {
+    if (localStorage.getItem('notes')) {
+      try {
+        const objFromLocalStorage = JSON.parse(localStorage.getItem('notes'));
+        const entries = Object.entries(objFromLocalStorage).map((note) => {
+          const [key, value] = note;
+
+          return [parseInt(key), value];
+        });
+
+        this.notes = new Map(entries);
+      } catch (e) {
+        console.log(e);
+        localStorage.removeItem('notes');
+      }
+    }
+  },
   methods: {
+    persistNotes() {
+      const mapToObj = Object.fromEntries(this.notes);
+      console.log({ mapToObj });
+      const json = JSON.stringify(mapToObj);
+
+      localStorage.setItem('notes', json);
+    },
     saveNote({ title, description, key }) {
       this.notes.set(key, { title, description });
+
+      this.persistNotes();
     },
     deleteNote({ key }) {
       this.notes.delete(key);
+
+      this.persistNotes();
     },
     editNote({ key }) {
       const { title, description } = this.notes.get(key);
 
       this.noteToEdit = { title, description, key };
       this.isEditing = true;
+
+      persistNotes();
     },
     clearEditNote() {
       this.noteToEdit = undefined;
