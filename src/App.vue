@@ -1,37 +1,48 @@
 <template>
   <div id="app">
-    <h1>TODO LIST</h1>
+    <h1>My Notes</h1>
 
-    <TodoForm :on-save="saveTodo" />
-
-    <TodoList :todos="todos" :on-delete="deleteTodo" />
+    <NoteForm :note="noteToEdit" :on-save="saveNote" :on-clear="clearEditNote" />
+    <NoteList :notes="notes" :on-delete="deleteNote" :on-edit="editNote" />
   </div>
 </template>
 
 <script>
-import TodoList from './components/TodoList';
-import TodoForm from './components/TodoForm';
+import NoteList from './components/NoteList';
+import NoteForm from './components/NoteForm';
 
 export default {
   name: 'App',
   components: {
-    TodoList,
-    TodoForm,
+    NoteList,
+    NoteForm,
   },
   data() {
     return {
-      todos: new Map([
-        [1, { title: 'Todo', description: 'Finalizar app de todos' }],
-        [2, { title: 'Todo 2', description: 'Finalizar tarfaz de casa' }],
+      notes: new Map([
+        [1, { title: 'Note', description: 'Finalizar app de notes' }],
+        [2, { title: 'Note 2', description: 'Finalizar tarfaz de casa' }],
       ]),
+      noteToEdit: undefined,
+      isEditing: false,
     };
   },
   methods: {
-    saveTodo({ title, description, key = Date.now() }) {
-      this.todos.set(key, { title, description });
+    saveNote({ title, description, key }) {
+      this.notes.set(key, { title, description });
     },
-    deleteTodo({ key }) {
-      this.todos.delete(key);
+    deleteNote({ key }) {
+      this.notes.delete(key);
+    },
+    editNote({ key }) {
+      const { title, description } = this.notes.get(key);
+
+      this.noteToEdit = { title, description, key };
+      this.isEditing = true;
+    },
+    clearEditNote() {
+      this.noteToEdit = undefined;
+      this.isEditing = false;
     },
   },
 };
