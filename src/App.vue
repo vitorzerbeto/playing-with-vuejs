@@ -25,9 +25,11 @@ export default {
     };
   },
   mounted() {
-    if (localStorage.getItem('notes')) {
+    const localStorageNotes = localStorage.getItem('notes');
+
+    if (localStorageNotes) {
       try {
-        const objFromLocalStorage = JSON.parse(localStorage.getItem('notes'));
+        const objFromLocalStorage = JSON.parse(localStorageNotes);
         const entries = Object.entries(objFromLocalStorage).map((note) => {
           const [key, value] = note;
 

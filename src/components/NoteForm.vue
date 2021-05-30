@@ -1,9 +1,9 @@
 <template>
   <div id="note-form">
-    <h2>Add New Note</h2>
+    <h2>{{ formTitle }}</h2>
     <input v-model="title" type="text" name="title" placeholder="Title" />
     <input v-model="description" type="text" name="description" placeholder="Description" />
-    <button @click="handleSave">Save</button>
+    <button :disabled="!canSave" @click="handleSave">Save</button>
     <button :disabled="!isEditing" @click="handleClear">Cancel</button>
   </div>
 </template>
@@ -31,6 +31,19 @@ export default {
       key: undefined,
       isEditing: false,
     };
+  },
+  computed: {
+    canSave() {
+      return (
+        this.title !== '' &&
+        this.title !== undefined &&
+        this.description !== '' &&
+        this.description !== undefined
+      );
+    },
+    formTitle() {
+      return this.title || 'Add New Note';
+    },
   },
   watch: {
     note: function (note) {
