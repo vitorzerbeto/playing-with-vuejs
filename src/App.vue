@@ -46,7 +46,6 @@ export default {
   methods: {
     persistNotes() {
       const mapToObj = Object.fromEntries(this.notes);
-      console.log({ mapToObj });
       const json = JSON.stringify(mapToObj);
 
       localStorage.setItem('notes', json);

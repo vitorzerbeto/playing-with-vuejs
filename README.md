@@ -14,7 +14,7 @@ Create and store your notes for later purpose!
 ## Bonus features
 
 - [ ] User can create and edit a note in Markdown format. On save it will convert Markdown to HTML
-- [ ] User can see the date when he created the note
+- [x] User can see the date when he created the note
 
 ## Useful links and resources
 

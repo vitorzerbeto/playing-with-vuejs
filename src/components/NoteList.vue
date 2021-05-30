@@ -38,10 +38,9 @@ export default {
 
 <style>
 #note-list {
-  display: flex;
-  flex-direction: column;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px #eee;
-  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 10px;
 }
 </style>
