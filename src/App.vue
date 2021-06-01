@@ -1,27 +1,37 @@
 <template>
-  <div id="app">
-    <h1>My Notes</h1>
+  <div id="my-app">
+    <div class="container">
+      <h1>My Notes</h1>
 
-    <NoteForm :note="noteToEdit" :on-save="saveNote" :on-clear="clearEditNote" />
-    <NoteList :notes="notes" :on-delete="deleteNote" :on-edit="editNote" />
+      <NoteList :notes="notes" :on-delete="deleteNote" :on-edit="editNote" />
+
+      <button title="Add Note" class="add-note" @click="openModal">+</button>
+    </div>
+
+    <Modal :is-active="isModalOpen">
+      <NoteForm :note="noteToEdit" :on-save="saveNote" :on-clear="clearEditNote" />
+    </Modal>
   </div>
 </template>
 
 <script>
 import NoteList from './components/NoteList';
 import NoteForm from './components/NoteForm';
+import Modal from './components/Modal';
 
 export default {
   name: 'App',
   components: {
     NoteList,
     NoteForm,
+    Modal,
   },
   data() {
     return {
       notes: new Map(),
       noteToEdit: undefined,
       isEditing: false,
+      isModalOpen: false,
     };
   },
   mounted() {
@@ -54,6 +64,7 @@ export default {
       this.notes.set(key, { title, description });
 
       this.persistNotes();
+      this.closeModal();
     },
     deleteNote({ key }) {
       this.notes.delete(key);
@@ -66,11 +77,19 @@ export default {
       this.noteToEdit = { title, description, key };
       this.isEditing = true;
 
-      persistNotes();
+      this.openModal();
     },
     clearEditNote() {
       this.noteToEdit = undefined;
       this.isEditing = false;
+
+      this.closeModal();
+    },
+    openModal() {
+      this.isModalOpen = true;
+    },
+    closeModal() {
+      this.isModalOpen = false;
     },
   },
 };
@@ -92,16 +111,47 @@ a {
   font-family: 'Montserrat', sans-serif;
 }
 
-#app {
+.container {
+  width: 100%;
   display: flex;
   flex-direction: column;
+}
+
+#my-app {
   width: 100vw;
   max-width: 1120px;
   margin: 0 auto;
 }
 
-#app h1 {
+#my-app h1 {
   text-align: center;
   width: 100%;
+}
+
+#my-app .add-note {
+  display: flex;
+  position: fixed;
+  bottom: 1vw;
+  right: calc((100vw - 1120px) / 2);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: purple;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 55px;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  font-weight: 200;
+
+  transition: transform 0.2s ease;
+}
+#my-app .add-note:hover {
+  transform: scale(1.1);
+}
+#my-app .add-note:active {
+  transform: scale(1.05);
 }
 </style>

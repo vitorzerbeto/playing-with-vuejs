@@ -1,10 +1,10 @@
 <template>
   <div id="note-form">
     <h2>{{ formTitle }}</h2>
-    <input v-model="title" type="text" name="title" placeholder="Title" />
-    <input v-model="description" type="text" name="description" placeholder="Description" />
+    <input v-model="title" :readonly="isEditing" type="text" name="title" placeholder="Title" />
+    <textarea v-model="description" name="description" placeholder="Description"></textarea>
     <button :disabled="!canSave" @click="handleSave">Save</button>
-    <button :disabled="!isEditing" @click="handleClear">Cancel</button>
+    <button @click="handleClear">Cancel</button>
   </div>
 </template>
 
@@ -80,8 +80,10 @@ export default {
 <style>
 #note-form {
   display: grid;
-  grid-template-columns: 1fr 1fr 200px 200px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto 1fr auto;
   width: 100%;
+  height: 100%;
   gap: 10px;
   padding: 10px;
   background: #eee;
@@ -93,10 +95,24 @@ export default {
 }
 
 #note-form input {
+  grid-column: 1 / -1;
   border: 0;
   width: 100%;
   height: 40px;
   background: #fff;
   font-size: 15px;
+}
+
+#note-form textarea {
+  grid-column: 1 / -1;
+  border: 0;
+  width: 100%;
+  background: #fff;
+  font-size: 15px;
+  resize: none;
+}
+
+#note-form button {
+  height: 40px;
 }
 </style>
