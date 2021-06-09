@@ -1,6 +1,6 @@
 <template>
   <div :class="modalContainerClasses">
-    <div class="background"></div>
+    <div class="background" @click="onClose"></div>
     <div class="modal">
       <slot />
     </div>
@@ -32,12 +32,14 @@ export default {
 
 <style>
 .modal-container {
-  display: none;
+  display: block;
   position: fixed;
   width: 100vw;
   height: 100vh;
   top: 0;
   right: 0;
+  visibility: hidden;
+  transition: visibility 0s 0.3s;
 }
 
 .modal-container .background {
@@ -48,6 +50,8 @@ export default {
   top: 0;
   left: 0;
   z-index: 0;
+  opacity: 0;
+  transition: opacity ease 0.3s;
 }
 
 .modal-container .modal {
@@ -57,10 +61,20 @@ export default {
   top: 0;
   right: 0;
   z-index: 1;
+  transform: translateX(100%);
+  transition: transform ease-out 0.3s;
 }
 
 /** MODAL ACTIVE **/
 .modal-container.modal-container--active {
-  display: block;
+  visibility: visible;
+  transition: visibility 0s 0s;
+}
+
+.modal-container.modal-container--active .background {
+  opacity: 1;
+}
+.modal-container.modal-container--active .modal {
+  transform: translateX(0);
 }
 </style>

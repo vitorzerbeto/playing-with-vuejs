@@ -8,7 +8,7 @@
       <button title="Add Note" class="add-note" @click="openModal">+</button>
     </div>
 
-    <Modal :is-active="isModalOpen">
+    <Modal :is-active="isModalOpen" :on-close="clearEditNote">
       <NoteForm :note="noteToEdit" :on-save="saveNote" :on-clear="clearEditNote" />
     </Modal>
   </div>
